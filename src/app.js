@@ -17,14 +17,28 @@ app.get("/test",(req,res) => {
     res.send("Testing server");
 });
 
-app.use("/user", (req,res) => {
-    res.send("HAHAHAAAAAHHAHAHA");
-})
+
+// app.use("/user", (req,res) => {
+
+//     res.send("HAHAHAAAAAHHAHAHA");
+// })
 
 
-app.get("/user", (req,res) => {
-    res.send({firstName: "Akshay", lastname:"Saini"});
-})
+// app.get("/user", (req,res) => {
+//     res.send({firstName: "Akshay", lastname:"Saini"});
+// })
+
+// app.get("/user", (req,res) => {
+//     console.log(req.query);
+//     res.send({firstName: "Akshay", lastname:"Saini", roll:"523110014"});
+// })
+
+// No space in route
+app.get("/user/:userId/:name/:password", (req,res) => {
+    console.log(req.params);
+    res.send({firstName: "Akshay", lastname:"Saini", roll:"523110014"});
+}) 
+
 
 
 app.post("/user", (req,res) => {
@@ -48,42 +62,49 @@ app.delete("/user", (req,res) => {
 app.get("/abc", (req,res) => {
     res.send("abc");
 })
+
 // b is optional
-// app.get("/ab?c", (req,res) => {
+// app.get(/ab?c/, (req,res) => {
 //     res.send("ab?c");
 // })
 
-app.get("/\/ab?c/", (req,res) => {
-    res.send("/ab?c");
-})
+// app.get(/\/ab?c/, (req,res) => {
+//     res.send("/\ab?c/");
+// })
 
 // a anc c must be at the end and multiple b can be there
 // atleast on b
-// app.get("/ab+c", (req,res) => {
-//     res.send("ab+c");
-// })
-
-// ab and cd must at the ends * can replace with any string
-// app.get("/ab*cd", (req,res) => {
-//     res.send("ab*cd");
-// })
-// (bc) complete is optional // /ad is correct
-// abd or acd are NOT
-// app.get("/a(bc)?d", (req,res) => {
-//     res.send("a(bc)?d");
-// })
-
-// complete bc must be there at least one
-// this is not working
-// app.get("/a(bc)+d", (req,res) => {
+// app.get(/ab+c/, (req,res) => {
 //     res.send("/ab+c");
 // })
 
-// using regex
-
-// app.get("/a(bc)?d", (req,res) => {
+// // ab and cd must at the ends * can replace with any string
+// app.get(/ab*cd/, (req,res) => {
+//     res.send("ab*cd");
+// })
+// // (bc) complete is optional // /ad is correct
+// // abd or acd are NOT
+// app.get(/a(bc)?d/, (req,res) => {
 //     res.send("a(bc)?d");
 // })
+
+// // complete bc must be there at least one
+// // this is not working
+// app.get(/x(pq)+yz/, (req,res) => {
+//     res.send("/x(pq)+yz");
+// })
+
+// // using regex
+
+// app.get(/h/, (req,res) => {
+//     res.send("hahhahahaa");
+// })
+
+// app.get(/\.*fly$/, (req,res) => {
+//     res.send("/\.*fly$/");
+// })
+// adding / at last means url can be abc_anything /abc/ will work
+
 
 
 app.listen(PORT, () => {
