@@ -49,30 +49,41 @@ app.get("/abc", (req,res) => {
     res.send("abc");
 })
 // b is optional
-app.get("/ab?c", (req,res) => {
-    res.send("ab?c");
+// app.get("/ab?c", (req,res) => {
+//     res.send("ab?c");
+// })
+
+app.get("/\/ab?c/", (req,res) => {
+    res.send("/ab?c");
 })
 
 // a anc c must be at the end and multiple b can be there
 // atleast on b
-app.get("/ab+c", (req,res) => {
-    res.send("/ab+c");
-})
+// app.get("/ab+c", (req,res) => {
+//     res.send("ab+c");
+// })
 
 // ab and cd must at the ends * can replace with any string
-app.get("/ab*cd", (req,res) => {
-    res.send("ab*cd");
-})
+// app.get("/ab*cd", (req,res) => {
+//     res.send("ab*cd");
+// })
 // (bc) complete is optional // /ad is correct
 // abd or acd are NOT
-app.get("/a(bc)?d", (req,res) => {
-    res.send("a(bc)?d");
-})
+// app.get("/a(bc)?d", (req,res) => {
+//     res.send("a(bc)?d");
+// })
 
 // complete bc must be there at least one
-app.get("/a(bc)+d", (req,res) => {
-    res.send("/ab+c");
-})
+// this is not working
+// app.get("/a(bc)+d", (req,res) => {
+//     res.send("/ab+c");
+// })
+
+// using regex
+
+// app.get("/a(bc)?d", (req,res) => {
+//     res.send("a(bc)?d");
+// })
 
 
 app.listen(PORT, () => {
