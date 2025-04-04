@@ -2,96 +2,91 @@ const express = require("express");
 
 const app = express();
 
-// if we dont send the response back it will goes to infinite loop 
-// res.send("route handle 1");
+// app.set(key,value); key is predefined string 
+// app.key("meri apni key", "meri apni value"); // userdefined key 
+// predefined key speeling mistake can give error or can add new key
 
-// arguments for app.use()
-// (route, route_handler)
-// multiple route handler can be there as other arguments
-// only 1st call back() will be handled
+app.set("case sensitive routing", false); // case sensitive
+app.set("strict routing", true); // routes k last mein / lgana 
 
-
-
-app.use("/user", (req,res,next) => {
-    // route handler 1
-    console.log("Handling the route user 1");
-    next();
-    // res.send("route handler 1"); 
-},
-(req,res,next) => {
-    console.log("handling the route user 2");
-
-    res.send("route handling 2");
-
-// if we do not call next() 
-// it will not go any further
-// and any res.send() in further functions will not give error
-    
-},
-(req,res,next) => {
-    console.log("3rd response handler called");
-    res.send("route handling 3");
-    next();
-})
-
-
-app.use("/user2", (req,res,next) => {
-    console.log("Handled route 1");
-    next();
-},
-(req,res,next) => {
-    console.log("Handled route 2");
-    next();
-    // if we not send response it will hanging out there ( infinite loop)
-    // if we call next()
-    // and there is no next middleware it will show error 
-    // bcz there is no route handler
-    // how many route handler you can use 
-    // but at the end response must be send
-
-}, (req,res,next) => {
-    console.log("handle route 3");
-    res.send("response 3");
-})
-
-// // these cb() are called middleware functions()
-// next() is mainly used in middleware functions in Express.js. Middleware functions can:
-// ✅ Modify the req and res objects
-// ✅ Execute some code
-// ✅ End the request-response cycle
-// ✅ Call the next middleware function
-
-// 1st response went successfully and the 2nd response will through an error
-// Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
-// server can send only one response on a single route
-
-
-// app.use("/",(req,res) => {
-//     res.send("chal gya");
+// app.use("/", (req,res,next) => {
+//     console.log("rhandling route 0");
+//     next();
 // })
-
-// 
-// we can wrap around all middleware functions in an array
-app.use("/wrapInArray", [
-(req,res,next) => {
-    console.log("handle route 3");
+app.use("/user", (req,res,next) => {
+    console.log("handling route 2");
+    res.send("response 2");
+})
+// it will never get a chance to execute
+app.use("/user", (req,res,next) => {
+    console.log("handling route 1");
     next();
-},
-(req,res,next) => {
-    console.log("handle route 3");
-    next();
-},
-(req,res,next) => {
-    console.log("handle route 3");
-    res.send("responses are wrapped in an array");
-}])
+})
+// sending a request to express server, it will go one by one check all these methods
+// it will find its matching, go and call cb() keep calling all cb()s untill a function which actually response back
+// all non responsive functions are middleware 
+// and response krne wala function called as request handler
+// middleware are in all methods { use, get, post, patch, delete }
 
-// app.use("/wrapInArr", rH1, rH2, rH3, rH4, rH5 );
-// app.use("/wrapInArr", rH1, rH2, rH3, [rH4, rH5] );
-// app.use("/wrapInArr", rH1, rH2, [rH3, rH4], rH5 );
-// app.use("/wrapInArr", [rH1, rH2, rH3], rH4, rH5 );
-// app.use("/wrapInArr", [rH1, rH2, rH3, rH4, rH5] );
+// this is not the proper way to check authorization
+// here the middleware concept comes
+// generally broadly middleware used with app.use()
 
+app.get("/admin1/getAllData", (req,res,next) => {
+    const token = "xyza";
+    const isAdminAuthrozed = token === "xyz";
+    if(isAdminAuthrozed){
+        res.send("all data send");
+    }
+    else{
+        res.status(401).send("unauthorised request");
+    }
+})
+
+
+app.get("/admin1/deleteUser", (req,res,next) => {
+    const token = "xyza";
+    const isAdminAuthrozed = token === "xyz";
+    if(isAdminAuthrozed){
+        res.send("user deleted successfully");
+    }
+    else{
+        res.status(401).send("unauthorised request");
+    }
+})
+
+// handle Auth middleware for all GET, POST, PATCH, DELETE
+// for Auth middleware only use app.use()
+// app.all("/admin", (req,res, next) => {
+    
+// })
+// .all exactly the same way .use
+app.use("/admin", (req,res, next) => {
+    console.log("admin authorisation is getting checked ");
+    const token = "xyz";
+    const isAdminAuthrozed = token === "xyz";
+    if(!isAdminAuthrozed){
+        res.status(401).send("Unauthorized request");
+    }
+    else{
+        next();
+        // res.send(" only /admin or other route requested ");
+    }
+})
+
+// here you can define any route start with /admin/getAllData
+// /admin/deleteUser
+
+app.get("/admin/addUser", (req,res,next) => {
+    console.log("user added ");
+    res.send("user added responsed");
+})
+app.delete("/admin/deleteUser", (req,res,next) => {
+    console.log("user deleted ");
+    res.send("user deleted responsed");
+})
+
+ 
 app.listen(7777, ()=> {
-    console.log("server is created successfully on port 7777" );
+    console.log("server is started");
 })
