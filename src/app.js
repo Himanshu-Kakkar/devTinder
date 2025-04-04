@@ -1,31 +1,33 @@
+const { error } = require("console");
 const express = require("express");
 
 const app = express();
-const { adminAuth, userAuth } = require("./middlewares/auth");
 
-app.use("/admin", adminAuth);
+app.get("/user/throwErr", (req, res) => {
+    // preferable throw err in try catch
+    try {
+        throw new Error("error msg");    
+    } catch (err) {
+        res.status(500).send("error caught", err);
+    }
+    
+    // unreachable code
+    res.send("learning try catch"); 
+})
+//OR
 
-app.use("/user/data", userAuth, (req,res) => {
-    console.log("user data");
-    res.send("user data sent"); 
+app.use("/errorAaGya", (req,res) => {
+    const err = new Error("simple error");
+    next(err); // error will passed to error handling middleware
+})
+// try to write error middleware at the end
+// app.use() -> request handler() or middleware();  parameters must in order err, req, res, next
+app.use("/", (err, req, res, next) => {
+    if(err){
+        res.status(500).send("something went wrong"); 
+    }
 })
 
-app.use("/user/login", (req,res) => {
-    console.log('log in');
-    res.send("logged in succesfully");
-})
-
-
-app.get("/admin/addUser", (req,res,next) => {
-    console.log("user added ");
-    res.send("user added responsed");
-})
-app.delete("/admin/deleteUser", (req,res,next) => {
-    console.log("user deleted ");
-    res.send("user deleted responsed");
-})
-
- 
 app.listen(7777, ()=> {
     console.log("server is started");
 })
