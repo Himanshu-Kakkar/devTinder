@@ -8,9 +8,18 @@
   },
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "express": "^5.1.0",
     "nodemon": "^3.1.9"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Himanshu-Kakkar/devTinder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Himanshu-Kakkar/devTinder/issues"
+  },
+  "homepage": "https://github.com/Himanshu-Kakkar/devTinder#readme",
+  "description": ""
 }
