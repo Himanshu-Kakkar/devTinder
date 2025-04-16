@@ -15,4 +15,5 @@ xml was used widely before json
     our server cant read JSON data
     server can read JS object
     
-
+#### Difference between PATCH and PUT
+    

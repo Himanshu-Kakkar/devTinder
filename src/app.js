@@ -3,6 +3,8 @@ const express = require("express");
 const app = express();
 const connectDB = require("./config/database.js");
 const User = require("./models/user.js");
+const { ReturnDocument } = require("mongodb");
+const { after } = require("node:test");
 
 // correct
 app.use(express.json()); // applied middleware to every route
@@ -80,6 +82,8 @@ app.get("/user", async (req,res) => {
 // get users by ID
 app.get("/ID",async (req,res) => {
     const userID = req.body._id;
+    console.log(userID);
+
     try {
         const users = await User.findById( {_id: userID});
 
@@ -103,6 +107,77 @@ app.get("/feed", async (req,res) => {
         res.send(users);
     } catch (err) {
         res.status(400).send("something went wrong");
+    }
+})
+// GET, POST are the API to retreive the data from db 
+// find, ... are mongoose methods ( part of API ) to retreive data
+// mongoose methods apply on models ( DB models) e.g. User defined in database.js
+
+// delete a user from the db
+app.delete("/dlt", async (req,res) => {
+    const userID = req.body._id;
+
+    try {
+        const user = await User.findByIdAndDelete({_id: userID});
+        // const user = await User.findByIdAndDelete(userID);
+        
+        if(!user){
+            res.status(404).send("User not found");
+        }
+        else{
+            res.send("User deleted successfully", user );
+        }
+        
+    } catch (err) {
+        res.status(400).send("something went wrong");
+        
+    }
+
+})
+
+
+// Update the DB using PATCH
+// findByIdAndUpdate() , findOneAndUpdate() behind the scene both are same thing
+// findByIdAndUpdate() with {_id : u8serID} work same as findOneAndUpdate()
+app.patch("/update",async (req,res) => {
+    const userId = req.body._id;
+    const data = req.body;
+
+    try {
+        const user = await User.findByIdAndUpdate({_id: userId}, data, { returnDocument: "after"});
+        // by default option for {returnDocument: "before"};
+        console.log(user);
+        // const user = await User.findByIdAndUpdate(userId, data);
+        // Any other feild apart from database schema will not update
+        if(!user){
+            res.status(404).send("User Not Found");
+        }
+        else{
+            res.send("User Updated Successfully");
+        }
+    } catch (err) {
+        res.status(400).send("Something went wrong");
+    }
+})
+// User update by email findOneAndUpdate(); 
+app.patch("/updateByEmail",async (req,res) => {
+    const email = req.body.emailId;
+    const data = req.body;
+
+    try {
+        const user = await User.findOneAndUpdate({emailId: email}, data, { returnDocument: "before"});
+        // by default option for {returnDocument: "before"};
+        console.log(user);
+        // const user = await User.findByIdAndUpdate(userId, data);
+        // Any other feild apart from database schema will not update
+        if(!user){
+            res.status(404).send("User Not Found");
+        }
+        else{
+            res.send("User Updated by email Successfully");
+        }
+    } catch (err) {
+        res.status(400).send("Something went wrong");
     }
 })
 
