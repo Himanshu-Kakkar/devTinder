@@ -54,8 +54,56 @@ app.post("/signup", async (req,res)=> {
     // } catch (err) {
     //     res.status(400).send("Error while saving the user", err.message);
     // }
-    
-    
+})
+
+// get users by emails
+app.get("/user", async (req,res) => {
+    const userEmail = req.body.emailId;
+    try {
+        // await User.find({ emailId: userEmail});
+        // res.send(User);
+        const users = await User.find({ emailId: userEmail});
+        // User defined as model in user.js database schema 
+        if(users.length === 0){
+            res.status(404).send("User Not Found");
+        }
+        else{
+            res.send(users);
+        }
+        
+
+    } catch (err) {
+        res.status(400).send("something went wrong");
+    }  
+})
+
+// get users by ID
+app.get("/ID",async (req,res) => {
+    const userID = req.body._id;
+    try {
+        const users = await User.findById( {_id: userID});
+
+        if(users.length === 0){
+            res.status(404).send("User Not Found");
+        }
+        else{
+            res.send(users);
+        }
+
+    } catch (err) {
+        res.status(400).send("Something went wrong");
+        
+    }
+})
+
+// FEED API, GET /feed get al the users from the databases
+app.get("/feed", async (req,res) => {
+    try {
+        const users = await User.find({}); //find({}) to fatch complete feed all rows
+        res.send(users);
+    } catch (err) {
+        res.status(400).send("something went wrong");
+    }
 })
 
 connectDB()

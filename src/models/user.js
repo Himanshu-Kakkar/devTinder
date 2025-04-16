@@ -23,3 +23,4 @@ const userSchema = mongoose.Schema({
 })
 
 module.exports = mongoose.model("User", userSchema);
+// creates a model User, using the schema
