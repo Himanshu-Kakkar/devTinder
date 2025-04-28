@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
 
 const userSchema = mongoose.Schema({
     firstName: {
@@ -49,11 +50,11 @@ const userSchema = mongoose.Schema({
     photoUrl: {
         type: String,
         default: "/Users/himanshukakkar/Downloads/user-dummy.png",
-        validate(value){
-            if(!validator.isURL(value)) {
-                throw new Error("Invalid image URL"+ value);
-            }
-        }
+        // validate(value){
+        //     if(!validator.isURL(value)) {
+        //         throw new Error("Invalid image URL"+ value);
+        //     }
+        // }
     },
     about: {
         type: String,

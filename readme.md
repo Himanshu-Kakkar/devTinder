@@ -44,6 +44,7 @@ unique, trim, default, required, min, max, minLength, maxLength
 update only certain feilds of DB schema
 e.g.  updating email of user can change complete profile of user
 
+## NEVER TRUST REQ.BODY
 ## NEVER TRUST ON USERS DATA
 ### ALWAYS VALIDATE EACH FEILD OF USER 
 
@@ -52,3 +53,10 @@ this is called as data sanitization
 #### two types of data validation
 #### schema level validation
 #### API level Validation
+
+use validator library to validate functions
+
+
+# S02 E-09
+## secure/hide password in mongodb
+#### utils : helper files / helper functions
