@@ -48,3 +48,7 @@ e.g.  updating email of user can change complete profile of user
 ### ALWAYS VALIDATE EACH FEILD OF USER 
 
 this is called as data sanitization
+
+#### two types of data validation
+#### schema level validation
+#### API level Validation
