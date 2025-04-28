@@ -17,3 +17,25 @@ xml was used widely before json
     
 #### Difference between PATCH and PUT
     
+# episode 08
+
+#### Samjho Ye Case | 
+####    Reality
+
+Tumne schema mein likh diya unique: true |
+    Bas Mongoose ko bol diya ki database mein index create karna.
+Tumne user.save() kiya | 
+    Mongoose database mein data bhejega, lekin wo duplicate check MongoDB karega, Mongoose nahi.
+Agar DB mein pehle se duplicate hai | 
+    Insert fail hoga aur error aayega MongoDB se
+Agar DB mein pehle se unique index hi nahi bana | 
+    Phir mongoose kuch nahi karega, duplicate data chale jayega silently.
+
+overall improve DB schema
+
+1. checks on db entries
+unique, trim, default, required, min, max, minLength, maxLength
+
+2. custom Validators()
+
+3. timestamps: true

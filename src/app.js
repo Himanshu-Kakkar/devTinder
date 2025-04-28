@@ -3,8 +3,6 @@ const express = require("express");
 const app = express();
 const connectDB = require("./config/database.js");
 const User = require("./models/user.js");
-const { ReturnDocument } = require("mongodb");
-const { after } = require("node:test");
 
 // correct
 app.use(express.json()); // applied middleware to every route
@@ -17,19 +15,26 @@ app.use(express.json()); // applied middleware to every route
 
 app.post("/signup", async (req,res)=> {
 
-    console.log(req.body); // undefined
+    // console.log("dsnsd"+ req.body); // undefined
     // bcz our server cant read JSON data
     // server can read JS object
     // need a middleware to convert JSON to JS object
     // predefined middleware by express
     // express.json()
     // save the data using postman
-    const user = new User(req.body);
+    // const user = req.body;
+    // console.log("Res is", user);
     try {
-        await user.save(); 
+        const user = req.body;
+        console.log("user is", user);
+
+        const newuser = new User(user);
+        console.log("\n\nres is", newuser);
+        await newuser.save();
         res.send("user added successfully");
     } catch (err) {
-        res.status(400).send("Error while saving the user", err.message);
+        console.error(err); // log error to run server continuously while valoidation failed
+        res.status(400).send("Error while saving the user", err);
     }
     // mannually save the data from the code
     // creating a new instance of the user model
@@ -144,7 +149,12 @@ app.patch("/update",async (req,res) => {
     const data = req.body;
 
     try {
-        const user = await User.findByIdAndUpdate({_id: userId}, data, { returnDocument: "after"});
+        const user = await User.findByIdAndUpdate({_id: userId}, data, { 
+            returnDocument: "after",
+            runValidators: true, // apply validators on patch put route,
+            // validators by default applied on post or for create new users 
+            
+        });
         // by default option for {returnDocument: "before"};
         console.log(user);
         // const user = await User.findByIdAndUpdate(userId, data);
@@ -156,7 +166,7 @@ app.patch("/update",async (req,res) => {
             res.send("User Updated Successfully");
         }
     } catch (err) {
-        res.status(400).send("Something went wrong");
+        res.status(400).send("UPDATE FAILED");
     }
 })
 // User update by email findOneAndUpdate(); 
