@@ -14,11 +14,21 @@ const userSchema = mongoose.Schema({
         lowercase: true,
         required: true,
         unique: true,
-        trim: true
+        trim: true,
+        validate(value){
+            if(!validator.isEmail(value)) {
+                throw new Error("Invalid Email Address"+ value);
+            }
+        }
     },
     password: {
         type: String,
         required: true,
+        validate(value){
+            if(!validator.isStrongPassword(value)) {
+                throw new Error("Enter a strong password: "+ value);
+            }
+        }
     },
     age: {
         min: 18,
@@ -39,6 +49,11 @@ const userSchema = mongoose.Schema({
     photoUrl: {
         type: String,
         default: "/Users/himanshukakkar/Downloads/user-dummy.png",
+        validate(value){
+            if(!validator.isURL(value)) {
+                throw new Error("Invalid image URL"+ value);
+            }
+        }
     },
     about: {
         type: String,
