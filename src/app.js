@@ -144,27 +144,63 @@ app.delete("/dlt", async (req,res) => {
 // Update the DB using PATCH
 // findByIdAndUpdate() , findOneAndUpdate() behind the scene both are same thing
 // findByIdAndUpdate() with {_id : u8serID} work same as findOneAndUpdate()
-app.patch("/update",async (req,res) => {
-    const userId = req.body._id;
+app.patch("/update/:userId",async (req,res) => {
+    
+    // const userId = req.body.userId;
+    // const userId = req.params._id;
+
+    const userId = req.params?.userId;
     const data = req.body;
 
     try {
-        const user = await User.findByIdAndUpdate({_id: userId}, data, { 
-            returnDocument: "after",
-            runValidators: true, // apply validators on patch put route,
-            // validators by default applied on post or for create new users 
-            
-        });
-        // by default option for {returnDocument: "before"};
-        console.log(user);
-        // const user = await User.findByIdAndUpdate(userId, data);
-        // Any other feild apart from database schema will not update
-        if(!user){
-            res.status(404).send("User Not Found");
-        }
-        else{
-            res.send("User Updated Successfully");
-        }
+
+    const ALLOWED_UPDATES = 
+    [
+        // "_id", // "userId"
+        "photoUrl", 
+        "about", 
+        "gender",
+        "age",
+        "skills"
+    ];
+
+    // example:
+    // {
+    //     "_id": "680fa9bc02b545269f10db41",
+    //     "firstName": "samay raina",
+    //     "emailId": "time@samay.com",
+    //     "password": "1234",
+    //     "age": 19,
+    //     "gender": "male",
+    //     "skills": ["javascript", "humour", "jokes"]
+    // }
+
+    
+    const isUpdateAllowed = Object.keys(data).every((k) => 
+        ALLOWED_UPDATES.includes(k)
+    );
+    if(!isUpdateAllowed){
+        throw new Error("Update Not Allowed");
+    }
+    if(data?.skills.length > 10){
+        throw new Error("skills cant be more than 10");
+    }
+    const user = await User.findByIdAndUpdate({_id: userId}, data, { 
+        returnDocument: "after",
+        runValidators: true, // apply validators on patch put route,
+        // validators by default applied on post or for create new users 
+        
+    });
+    // by default option for {returnDocument: "before"};
+    console.log(user);
+    // const user = await User.findByIdAndUpdate(userId, data);
+    // Any other feild apart from database schema will not update
+    if(!user){
+        res.status(404).send("User Not Found");
+    }
+    else{
+        res.send("User Updated Successfully");
+    }
     } catch (err) {
         res.status(400).send("UPDATE FAILED");
     }

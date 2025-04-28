@@ -39,3 +39,12 @@ unique, trim, default, required, min, max, minLength, maxLength
 2. custom Validators()
 
 3. timestamps: true
+
+#### API level validations
+update only certain feilds of DB schema
+e.g.  updating email of user can change complete profile of user
+
+## NEVER TRUST ON USERS DATA
+### ALWAYS VALIDATE EACH FEILD OF USER 
+
+this is called as data sanitization
