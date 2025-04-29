@@ -58,5 +58,12 @@ use validator library to validate functions
 
 
 # S02 E-09
+
 ## secure/hide password in mongodb
 #### utils : helper files / helper functions
+
+password hashing 
+n level encryption on password
+
+login route
+compare/validate user's emailId and Password with db's feilds
