@@ -4,6 +4,7 @@ const app = express();
 const connectDB = require("./config/database.js");
 const User = require("./models/user.js");
 const { validateSignUpData } = require("./utils/validation.js");
+const bcrypt = require("../node_modules/bcrypt/bcrypt.js")
 
 // correct
 app.use(express.json()); // applied middleware to every route
@@ -18,11 +19,21 @@ app.post("/signup", async (req,res)=> {
     try {    
         // VALIDATION OF DATA
         validateSignUpData(req);
+        const {firstName, lastName, emailId, password} = req.body;
 
         // ENCRYPT THE PASSWORD
+        const passwordHash = await bcrypt.hash(password,10);
+        // 10 is the level of encryption 
+        // higher level == more encryption == more secure == takes more time to encrypt as well as decrypt
+        console.log(passwordHash);
 
         // CREATING A NEW INSTANCE
-        const user = new User(req.body);
+        const user = new User({
+            firstName,
+            lastName,
+            emailId,
+            password: passwordHash,
+        });
         await user.save();
 
         res.send("User added Successfully");
@@ -32,6 +43,8 @@ app.post("/signup", async (req,res)=> {
     }
 
 })
+
+
 
 // app.post("/signup", async (req,res)=> {
 
