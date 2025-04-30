@@ -5,9 +5,16 @@ const connectDB = require("./config/database.js");
 const User = require("./models/user.js");
 const { validateSignUpData } = require("./utils/validation.js");
 const bcrypt = require("../node_modules/bcrypt/bcrypt.js")
+const cookieParser = require("cookie-parser");
+const jwt = require("jsonwebtoken");
+const { LuGalleryHorizontal } = require("react-icons/lu");
+
 
 // correct
+app.use(cookieParser());
+// To read cookie
 app.use(express.json()); // applied middleware to every route
+// to read data in json format
 // Now we will get JS object and server can read and console.log() works
 //wrong 
 // bcz express.json() returns a middleware
@@ -60,6 +67,15 @@ app.post("/login", async (req, res)=> {
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
         if(isPasswordValid){
+
+            // Create a JWT token
+            const token = await jwt.sign({_id: user._id},"DEV@Tinder$790")
+            // jwt.sign( hidden data inside token, secret key );
+            console.log(token);
+            // Add a token to cookie and send the response back to user
+            res.cookie("token", token);
+            // res.cookie("token", "manuallyWrittenTokenAsOfNow");
+
             res.send("Login Successfull");
         }
         else{
@@ -71,6 +87,37 @@ app.post("/login", async (req, res)=> {
         res.status(400).send("ERROR: "+ err.message);
     }
 })
+
+app.get("/profile", async (req,res) => {
+    try {
+        const cookies = req.cookies;
+        const {token} = cookies; // extract token from cookies
+        if(!token){
+            throw new Error("Invalid Token");
+            
+        }
+        // VALIDATE MY TOKEN
+        const deCodedMsg = await jwt.verify(token,"DEV@Tinder$790");
+
+        // console.log(deCodedMsg); // deCodedMsg contains _id
+        const { _id } = deCodedMsg;
+        console.log("Logged in user is: ", _id);
+
+        const user = await User.findById(_id);
+        if(!user){
+            res.status(400).send("User doesn't exist");
+        }
+        res.send(user);
+
+        // console.log(cookies);
+        // res.send("Reading cookie");
+    
+    } catch (error) {
+        res.status(400).send("Error: "+ error.message)
+        
+    }
+})
+
 
 // app.post("/signup", async (req,res)=> {
 

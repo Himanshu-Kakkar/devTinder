@@ -67,3 +67,28 @@ n level encryption on password
 
 login route
 compare/validate user's emailId and Password with db's feilds
+
+
+# S02 E-10
+
+#### JWT Tokens
+
+# We WRITE CODE THAT HUMAN CAN UNDERSTAND
+
+Everytime an API call goes, server need to validate wheather this user is validate or not
+
+WHAT IS LOGIN ?
+user logs in with email and password server validate it. and generate a JWT token and wrap inside a cookie send back the cookie to user.
+further everytime an API Called by user this cookie sent from user to server and server validate this cookie that user is authenticate or not.
+Cookie saved on user's browser.
+
+Cookie can have expire time set by developer.
+after expire time. user have old cookie and server has new cookie, validation failed...
+so login again.
+
+JWT token : header.payload.signature 
+
+
+# Session Hijacking
+# cookie hijacking
+every time you logged in it will create a new token 
