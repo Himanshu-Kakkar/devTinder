@@ -1,5 +1,14 @@
 # S02 E07
+API - Feed API - GET/ feed  - get all the users from the db
+GET user by ID
+Create a Delete USer API
+difference betwwen  PATCH and PUT
+Upodate a user
+Explore the mongoose documentation for Model methods
+what are options in a model.findOneAndUpdate method, explore more about it
+update the user with email ID
 
+#### self written:
 post query is used to send data to mongodb.
 to store data to database without changing in code just like actual project using POST
 
@@ -17,7 +26,22 @@ xml was used widely before json
     
 #### Difference between PATCH and PUT
     
+
 # episode 08
+
+Explore schematype options from the documentations
+add required, unique, lowercase, min, minLength, trim
+Add default
+create a custom validate function for gender
+Improve the DB schema - put all appropriate validations on each feild
+Add timestamps to the user SChema
+add API level validations on patch request and sign post API
+
+data Sanitizing ; Add Api Valdations for each feild
+Install Validator
+Explore Validator library function and use validator() func for passswrod, email, photoUrl, 
+Never trust req.body
+
 
 #### Samjho Ye Case | 
 ####    Reality
@@ -57,7 +81,14 @@ this is called as data sanitization
 use validator library to validate functions
 
 
+
 # S02 E-09
+
+validate data in signup API
+install bcrypt package
+create password hash using bcrypt.hash & save the user is excrupted password
+create login API
+compare passwords and throw errors if email or password is not valid
 
 ## secure/hide password in mongodb
 #### utils : helper files / helper functions
@@ -70,6 +101,21 @@ compare/validate user's emailId and Password with db's feilds
 
 
 # S02 E-10
+
+install cookie-parser
+just send a dummy cookie to user
+create /profile API and check if you get the dummy cooiki back
+install jsonWebToken
+in login API after email and password validation , create a actual jwt token and send it to user in cookies
+read the cookies inside your profile API and find the logged In user
+create a userAuth middleware
+add the userAuth middleware to /profile API and a new /sendConnectionrequest API
+set the expiry of JWT token and cookies to 7 days ( or  1 month satndard )
+there is a session concept in banking sites
+banking sites expires the session in 15-20 mins 
+
+Never expires the token is a big harm.
+
 
 #### JWT Tokens
 
