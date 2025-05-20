@@ -116,7 +116,8 @@ banking sites expires the session in 15-20 mins
 
 Never expires the token is a big harm.
 
-
+create userSchema method to getJWT()
+cretae userSchema method to comparepassword(passwordInputByUser)
 #### JWT Tokens
 
 # We WRITE CODE THAT HUMAN CAN UNDERSTAND
@@ -138,3 +139,22 @@ JWT token : header.payload.signature
 # Session Hijacking
 # cookie hijacking
 every time you logged in it will create a new token 
+
+
+# S02 E-11
+
+Create a list of all APIs you can think of in devTinder
+Group multiple routes under respective routers
+
+cleaning the app.js
+
+create routes seprately
+
+In app.js app is comming from express()
+same as In routes/auth.js authrouter is comming from express.router();
+app and router is almost same from user side
+developer are the user for use libraries
+
+Create routes folder for managing auth, profiles, request routers
+create authRouter, requestrouter, profileRouter inside routes folder
+Import these routers in app.js
