@@ -64,13 +64,21 @@ authRouter.post("/login", async (req, res)=> {
             })
 
             // jwt.sign( hidden data inside token, secret key );
-            console.log(token);
+            // console.log(token);
 
             // Add a token to cookie and send the response back to user
             // EXPIRING A COOKIE AS WELL AS TOKEN
             res.cookie("token", token, {
                 expires: new Date(Date.now() + 8 * 3600000), // it will add expire details in cookie in postman
             });
+
+            // res.cookie("token", token, {
+            //     httpOnly: true,
+            //     secure: true,
+            //     maxAge: 8 * 3600000,
+            //     sameSite: "Lax",
+            // });
+
             // res.cookie("token", "manuallyWrittenTokenAsOfNow");
 
             res.send("Login Successfull");
@@ -85,4 +93,11 @@ authRouter.post("/login", async (req, res)=> {
     }
 })
 
+authRouter.post("/logout", async (req,res) => {
+    res.cookie("token", null, {
+        expires: new Date(Date.now())
+    });
+    res.send();
+    //res.cookie().send(); same thing
+})
 module.exports = authRouter;

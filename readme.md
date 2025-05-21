@@ -158,3 +158,9 @@ developer are the user for use libraries
 Create routes folder for managing auth, profiles, request routers
 create authRouter, requestrouter, profileRouter inside routes folder
 Import these routers in app.js
+
+Create /logout API
+Create PATCH /profile/edit
+Create Patch /profile/password // forgot passwor API
+
+Make sure you vaidate all data in every post, patch, put APIs.

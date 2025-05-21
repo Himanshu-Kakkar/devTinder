@@ -42,7 +42,8 @@ const userSchema = mongoose.Schema({
         // doesnot run by default when edit or update an existing user
         // custom validations to the schema
         validate(value) {
-            if(!['male','female','other'].includes(value)){
+            const allowedgenders = ['male','female','other'];
+            if(!allowedgenders.includes(value.toLowerCase())){
                 throw new Error("gender is not valid");
             }
         }
