@@ -171,3 +171,33 @@ Make sure you vaidate all data in every post, patch, put APIs.
 #### Logical DB Query
 
 Every single corner of your API should be secure
+
+### Schema.pre()
+
+Create connection request schema
+send connection request API
+proper validation of data
+validate all corner cases
+Logical Queries in mongodb $or ,$and, $not, ...
+
+Schema.pre() 
+pre is a mongoose middleware hook
+"save" is as event handler or action
+"save": the hook trigger
+run middleware pre function() before save event
+cannot use arrow function here bcz of this keyword 
+.equals() is strictly compare like === 
+used to compare objects
+
+using indexes in schema make it faster in search any query 
+db can be hang if finding some data took so long time
+
+unique: true
+mongo db automatically create an index
+Read more about indexes
+why indexes
+advantages / disadvantages of indexes
+disadvantages of lot of indexes
+
+
+# S02 E-13

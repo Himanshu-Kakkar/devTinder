@@ -6,6 +6,7 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
         minLength: 2,
+        index:true,
     },
     lastName: {
         type: String
@@ -14,7 +15,7 @@ const userSchema = mongoose.Schema({
         type: String,
         lowercase: true,
         required: true,
-        unique: true,
+        unique: true, //mongo db automatically create an index
         trim: true,
         validate(value){
             if(!validator.isEmail(value)) {
@@ -79,6 +80,13 @@ const userSchema = mongoose.Schema({
     // and when user last updated
 }
 )
+// COMPOUND INDEXING
+// User.find({firstName: "xyz", lastName: "abc"});
+
+// userSchema.index({firstName: 1, lastname: 1});
+
+// 1 for ascending and -1 for descending 
+// still there are more options 
 
 module.exports = mongoose.model("User", userSchema);
 // creates a model User, using the schema

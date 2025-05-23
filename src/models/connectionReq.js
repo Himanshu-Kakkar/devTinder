@@ -25,6 +25,27 @@ const connectionRequestSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
+// COMPOUND INDEXING
+// ConnectionRequest.find({fromUserId: 12345678, toUserId: 234567898765 });
+connectionRequestSchema.index({fromUserId: 1, toUserId: 1});
+
+connectionRequestSchema.pre("save", function(next) {
+    const connectionRequest = this;
+
+    // checks toUser and fromUser are not same
+    if(connectionRequest.fromUserId.equals(connectionRequest.toUserId)){
+        throw new Error("Cannot send connection request to youself");
+    }
+    next();
+})
+// pre is a mongoose middleware hook
+// "save" is as event handler or action
+// "save": the hook trigger
+// run middleware pre function() before save event
+// cannot use arrow function here bcz of this keyword 
+// .equals() is strictly compare like === 
+// used to compare objects
+
 const ConnectionRequestModel = new mongoose.model(
     "connectionRequest",
     connectionRequestSchema

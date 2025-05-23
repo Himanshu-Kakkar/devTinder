@@ -26,12 +26,16 @@ requestRouter.post("/request/send/:status/:toUserId", userAuth, async (req,res) 
         }
 
         // validation that fromUser != toUser 
-        const isSameUser = fromUserId === toUserId;
-        if(!isSameUser){
-            return res.status(400).json({message: "receiver can not be same as sender"});
-        }
+        // NOT WORKING
+        // const isSameUser = fromUserId === toUserId;
+        // if(!isSameUser){
+        //     return res.status(400).json({message: "receiver can not be same as sender"});
+        // }
 
         // validation if request is already sent: user A to user B or user B to user A
+        // use compound index concept for faster search  query in mongo db.
+        // indexing on a single params will not  make it faster search
+        
         const existingConnectionRequest = await ConnectionRequest.findOne({
             $or: [
                 { fromUserId, toUserId },
@@ -51,7 +55,8 @@ requestRouter.post("/request/send/:status/:toUserId", userAuth, async (req,res) 
         const data = await connectionRequest.save();
 
         res.json({
-            message: "Connection request Sent Successfully",
+            // message: "Connection request Sent Successfully",
+            message: `${req.user.firstName} is ${status} in ${toUser.firstName}`,
             data,
         });
 
