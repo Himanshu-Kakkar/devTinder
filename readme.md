@@ -164,3 +164,10 @@ Create PATCH /profile/edit
 Create Patch /profile/password // forgot passwor API
 
 Make sure you vaidate all data in every post, patch, put APIs.
+
+
+# S02 E12
+
+#### Logical DB Query
+
+Every single corner of your API should be secure
