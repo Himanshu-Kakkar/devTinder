@@ -12,6 +12,7 @@ const connectionRequestSchema = new mongoose.Schema(
         //receiveruser
         toUserId: {
             type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
             required: true,
         },
 

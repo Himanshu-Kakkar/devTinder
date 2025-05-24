@@ -3,6 +3,7 @@ const { userAuth } = require("../middlewares/auth.js");
 const connectionRequest = require("../models/connectionReq.js");
 
 const userRouter = express.Router();
+const USER_SAFE_DATA = "firstName lastName photoUrl age gender about skills";
 
 // Get all the pending connection request for the logged in user
 userRouter.get("/user/requests/received", userAuth, async (req,res) => {
@@ -11,7 +12,7 @@ userRouter.get("/user/requests/received", userAuth, async (req,res) => {
         const connectionRequests = await connectionRequest.find({
             toUserId: loggedInUser._id,
             status: "interested"
-        }).populate("fromUserId","firstName lastName");
+        }).populate("fromUserId",USER_SAFE_DATA);
 
         // other way to write
         // }).populate("fromUserId", ["firstName", "lastName"]);
@@ -28,6 +29,42 @@ userRouter.get("/user/requests/received", userAuth, async (req,res) => {
         res.status(400).send("ERROR: " + err.message);
     }
     
+})
+
+// get all the connections of logged In User
+userRouter.get("/user/connections", userAuth, async (req,res)=> {
+    try {
+        const loggedInUser = req.user;
+        // logged in user can be toUser or fromUSer ststus should be accepted then its a connection
+        const connectionRequests = await connectionRequest.find({
+            $or: [
+                {toUserId: loggedInUser._id, status: "accepted"},
+                {fromUserId: loggedInUser._id, status: "accepted"}
+            ],
+        })
+        .populate("fromUserId", USER_SAFE_DATA)
+        .populate("toUserId", USER_SAFE_DATA);
+
+        const data = connectionRequests.map((row)=> {
+            if(row.fromUserId._id.toString() === loggedInUser._id.toString()) // comparing 2 object ids directly can give unexpected results
+                 return row.toUserId;
+            return row.fromUserId; });
+
+        res.json({data});
+
+    } catch (err) {
+        res.status(400).send("ERROR: " + err.message);
+    }
+})
+
+userRouter.get("/user/feed", userAuth, async(req,res)=> {
+    try {
+        const loggedInUser = req.user;
+
+
+    } catch (err) {
+        res.status(400).send("ERROR: " + err.message);
+    }
 })
 
 module.exports = userRouter;
