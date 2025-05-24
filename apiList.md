@@ -22,7 +22,9 @@ connectionRequestRouter
  - POST /request/review/accepted/:requestId
  - POST /request/review/rejected/:requestId
 
+ POST /request/review/:status/:requestid
+
 userRouter
- - GET /connections
- - GET /request/received
- - GET /feed - Gets you the profiles o other users on platform
+ - /user/requests/received
+ - GET /user/connections
+ - GET /user/feed - Gets you the profiles o other users on platform

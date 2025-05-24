@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const authRouter = require('./routes/auth.js');
 const requestRouter = require('./routes/request.js');
 const profileRouter = require('./routes/profile.js');
+const userRouter = require("./routes/userRouter.js");
 
 // correct
 app.use(cookieParser());
@@ -23,6 +24,8 @@ app.use(express.json()); // applied middleware to every route
 app.use("/", authRouter);
 app.use("/",profileRouter);
 app.use("/",requestRouter);
+app.use("/", userRouter);
+
 
 connectDB()
 .then(()=>{

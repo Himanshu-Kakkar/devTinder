@@ -201,3 +201,19 @@ disadvantages of lot of indexes
 
 
 # S02 E-13
+
+write code with proper validations for POST APIs
+
+thought process for GET vs POST
+
+
+.save() should be last second line in code
+last line response.send()
+before save a lot of lines to validate data receiveing from POST APIs
+
+## NEXT WORLD WAR WILL HAPPEN BECAUSE OF DATA
+### DATA IS THE NEW OIL
+
+read about ref and .populate()
+
+/user/requests/received done with all checks
