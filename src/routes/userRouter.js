@@ -1,6 +1,7 @@
 const express = require('express');
 const { userAuth } = require("../middlewares/auth.js");
 const connectionRequest = require("../models/connectionReq.js");
+const User = require("../models/user.js");
 
 const userRouter = express.Router();
 const USER_SAFE_DATA = "firstName lastName photoUrl age gender about skills";
@@ -57,10 +58,52 @@ userRouter.get("/user/connections", userAuth, async (req,res)=> {
     }
 })
 
-userRouter.get("/user/feed", userAuth, async(req,res)=> {
+userRouter.get("/feed", userAuth, async(req,res)=> {
     try {
-        const loggedInUser = req.user;
 
+        const loggedInUser = req.user;
+        // /feed?page=1&limit=10
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page-1)*limit;
+
+        // user see all the cards except
+        // his own card
+        // his connections
+        // ignored peoples
+        // already sent the connection request
+
+        // find all connection requests (sent + received)
+
+        const connectionRequests = await connectionRequest.find({
+            $or: [
+                { fromUserId: loggedInUser._id},
+                { toUserId: loggedInUser._id}
+            ],
+        })
+          .select('fromUserId toUserId')
+        //   .populate("fromUserId", "firstName")
+        //   .populate("toUserId", "firstName");
+        // These users are not shown in feed
+        
+        const hiddenUsersFromFeed = new Set();
+        connectionRequests.forEach((req) => {
+            hiddenUsersFromFeed.add(req.fromUserId.toString());
+            hiddenUsersFromFeed.add(req.toUserId.toString())
+        })
+
+        const users = await User.find({
+            $and: [
+                {_id: {$nin: Array.from(hiddenUsersFromFeed)}},
+                {_id: {$ne: loggedInUser._id}},
+            ],
+            
+        })
+        .select(USER_SAFE_DATA)
+        .skip(skip)
+        .limit(limit);
+
+        res.send(users);
 
     } catch (err) {
         res.status(400).send("ERROR: " + err.message);

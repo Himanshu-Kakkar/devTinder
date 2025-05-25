@@ -217,3 +217,24 @@ before save a lot of lines to validate data receiveing from POST APIs
 read about ref and .populate()
 
 /user/requests/received done with all checks
+
+
+# S02 E-14
+
+complete feed API
+GET /feed
+
+### Pagination 
+ - showing n pages or n user cards on feed instead of loading all Users to the feed API
+
+ - /feed?page=1&limit=10 => 1-10 => .skip(0) & .limit(10)
+
+ - /feed?page=2&limit=10 => 11-20 => .skip(10) & .limit(10)
+
+ - /feed?page=3&limit=10 => 21-30 => .skip(10) & .limit(10)
+
+#### req.params -> /feed:params
+#### req.query -> /feed?queries
+
+always sent the response in json format or standard format of data
+so that frontend can receive it easily

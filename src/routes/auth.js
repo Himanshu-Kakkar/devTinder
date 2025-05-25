@@ -21,7 +21,7 @@ authRouter.post("/signup", async (req,res)=> {
         const passwordHash = await bcrypt.hash(password,10);
         // 10 is the level of encryption 
         // higher level == more encryption == more secure == takes more time to encrypt as well as decrypt
-        console.log(passwordHash);
+        // console.log(passwordHash);
 
         // CREATING A NEW INSTANCE
         const user = new User({
