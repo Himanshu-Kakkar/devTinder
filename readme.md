@@ -238,3 +238,9 @@ GET /feed
 
 always sent the response in json format or standard format of data
 so that frontend can receive it easily
+
+
+# S02 E-15
+
+#### White Listing Domain names
+#### use cors() middleware to allow access between multiple domains

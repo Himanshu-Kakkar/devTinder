@@ -35,7 +35,8 @@ const userAuth = async (req,res, next) => {
     try {
         const {token} = req.cookies;
         if(!token){
-            throw new Error("Invalid Token");
+            // throw new Error("Invalid Token");
+            return res.status(401).send("Please Login!");
         }
 
 
@@ -58,7 +59,6 @@ const userAuth = async (req,res, next) => {
         res.status(400).send("Error:"+err.message);
     }
 }
-
 
 
 module.exports = {
