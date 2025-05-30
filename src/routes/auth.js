@@ -30,9 +30,18 @@ authRouter.post("/signup", async (req,res)=> {
             emailId,
             password: passwordHash,
         });
-        await user.save();
+        const savedUser = await user.save();
+        // const token = await savedUser.getJWT();
+        const token = await jwt.sign({_id: savedUser._id},"DEV@Tinder$790", {
+                expiresIn: "1d"
+                // expiresIn: "1h"
+            })
 
-        res.send("User added Successfully");
+        res.cookie("token", token, {
+            expires: new Date(Date.now() + 8 * 3600000),
+        })
+        res.json({message: "User added Successfully", data: savedUser});
+
     }
     catch(err){
         res.status(400).send("ERROR: "+ err.message);
@@ -58,6 +67,8 @@ authRouter.post("/login", async (req, res)=> {
         if(isPasswordValid){
 
             // Create a JWT token
+            // const token  = await user.getJWT();
+
             const token = await jwt.sign({_id: user._id},"DEV@Tinder$790", {
                 expiresIn: "1d"
                 // expiresIn: "1h"
