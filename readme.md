@@ -244,3 +244,64 @@ so that frontend can receive it easily
 
 #### White Listing Domain names
 #### use cors() middleware to allow access between multiple domains
+
+
+# S03 Ep-02
+
+
+    - signup on aws
+    - Launch instances
+    - chmod 400 <secret>.pem
+    - cd Downloads
+    - ssh -i "DevTinder-secret.pem" ubuntu@ec2-13-60-212-146.eu-north-1.compute.amazonaws.com
+    - Install Node version spesific that is used on your project
+    - Git clone both frontEnd and Backend 
+    - Git pull if any changes is there
+    - Frontend
+        - npm i -> dependencies
+        - npm run dev // command to run project at developer level
+        - npm start // to run at production level
+        - enable frontend ip address in mongo DB Atlas
+        // Allowed EC2 instance public IP on mongoDB server
+        - Allow port 7777 in aws instance
+        - install pm2 // process manager
+        - to run npm start 24/7 as we cant run mannually from our terminal for 24/7
+        - npm install pm2 -g
+        - pm2 start npm -- start // run npm start via pm2
+        - pm2 logs // if there is any problem in running 
+        - pm2 list // show process status online/stopped
+
+####      // npm is the name of the application 
+        - pm2 flush npm // to clear all logs
+        - pm2 stop npm // to stop the running server , stop the  process npm
+        - pm2 delete npm // to delete the process npm
+        - pm2 start npm --name "<new_name>"-- start
+
+
+Backend : http://13.60.212.146:7777/feed
+Frontend: http://13.60.212.146/
+
+its like 
+backend: devtinder.com:7777/
+frontend: devtinder.com/
+
+its a mismatch
+### Its a nginx confflict; solution: nginx proxy pass 
+
+there is congiguration file that you will have to edit
+its like a proxy match ***http://13.60.212.146:7777/*** to ***http://13.60.212.146/api/***
+
+        - config nginx - /etc/nginx/sites-available/default
+
+code : 
+server_name 13.60.212.146;
+location /api/ {
+        proxy_pass http://13.60.212.146:7777/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    - sudo systemctl restart nginx // restart nginx
