@@ -7,7 +7,7 @@ const User = require("../models/user.js");
 const jwt = require("jsonwebtoken");
 // same things, internally both codebase are differ 
 // but no worry working is same for us.
-
+const JWT_SECRET = process.env.JWT_SECRET_KEY;
 //app.use();
 // authRouter.use()
 
@@ -32,10 +32,10 @@ authRouter.post("/signup", async (req,res)=> {
         });
         const savedUser = await user.save();
         // const token = await savedUser.getJWT();
-        const token = await jwt.sign({_id: savedUser._id},"DEV@Tinder$790", {
+        const token = await jwt.sign({_id: savedUser._id},JWT_SECRET, {
                 expiresIn: "1d"
                 // expiresIn: "1h"
-            })
+        })
 
         res.cookie("token", token, {
             expires: new Date(Date.now() + 8 * 3600000),
@@ -69,7 +69,7 @@ authRouter.post("/login", async (req, res)=> {
             // Create a JWT token
             // const token  = await user.getJWT();
 
-            const token = await jwt.sign({_id: user._id},"DEV@Tinder$790", {
+            const token = await jwt.sign({_id: user._id},JWT_SECRET, {
                 expiresIn: "1d"
                 // expiresIn: "1h"
             })

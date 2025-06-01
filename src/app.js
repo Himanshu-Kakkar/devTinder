@@ -1,3 +1,7 @@
+require("dotenv").config(); 
+console.log("JWT_SECRET_KEY is:", process.env.JWT_SECRET_KEY); // ✅ DEBUG LINE
+
+// ... rest of your server setup
 
 const express = require("express");
 const app = express();
@@ -9,6 +13,7 @@ const requestRouter = require('./routes/request.js');
 const profileRouter = require('./routes/profile.js');
 const userRouter = require("./routes/userRouter.js");
 const cors = require('cors');
+const port = process.env.PORT || 7777;
 
 // CORS (Cross-Origin Resource Sharing) is a security feature built into browsers that blocks web applications from making requests to a different origin than the one that served the web page.
 // When you use the cors middleware in Express, it tells the browser:
@@ -53,7 +58,7 @@ app.use("/", userRouter);
 connectDB()
 .then(()=>{
     console.log("database connect successfully");
-    app.listen(7777, ()=> { 
+    app.listen(port, ()=> { 
         console.log("server is started");
     })
 })

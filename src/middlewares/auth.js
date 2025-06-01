@@ -1,6 +1,6 @@
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
-
+const JWT_SECRET = process.env.JWT_SECRET_KEY;
 
 // DUMMY TOKEN AUTHENTICATION
 
@@ -41,7 +41,7 @@ const userAuth = async (req,res, next) => {
 
 
         // VALIDATE THE TOKEN
-        const deCodedObj = await jwt.verify(token, "DEV@Tinder$790");
+        const deCodedObj = await jwt.verify(token, JWT_SECRET);
         const {_id} = deCodedObj;
 
         // FIND THE USER

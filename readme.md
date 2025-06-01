@@ -257,7 +257,7 @@ so that frontend can receive it easily
     - Install Node version spesific that is used on your project
     - Git clone both frontEnd and Backend 
     - Git pull if any changes is there
-    - Frontend
+    - Backend
         - npm i -> dependencies
         - npm run dev // command to run project at developer level
         - npm start // to run at production level
