@@ -1,5 +1,6 @@
 require("dotenv").config(); 
-console.log("JWT_SECRET_KEY is:", process.env.JWT_SECRET_KEY); // ✅ DEBUG LINE
+// console.log("JWT_SECRET_KEY is:", process.env.JWT_SECRET_KEY);
+ // ✅ DEBUG LINE
 
 // ... rest of your server setup
 
