@@ -305,3 +305,23 @@ location /api/ {
     }
 
     - sudo systemctl restart nginx // restart nginx
+
+
+# AWS SES 
+### Simple Email Service
+
+ - create an IAM user
+ - give access to Amazon SES full adress
+ - AMAZON SES: create an identity 
+    - Either Domain
+    - or prsonal mail
+- verify domain or mail whatever you have
+- Install AWS SDK - v3 
+- Code Example: https://github.com/awsdocs/aws-doc-sdk-examples/tree/main/javascriptv3/example_code/ses#code-examples
+
+- Setup SES client
+- Access Credentials would be created in IAM under security credentials Tab
+- add the credentils to the env file
+- write code for sesClient
+- Write code for sending Email address
+- Make the email dynamic by passing more params to the run function

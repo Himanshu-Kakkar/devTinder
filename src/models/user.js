@@ -56,7 +56,7 @@ const userSchema = mongoose.Schema({
     },
     photoUrl: {
         type: String,
-        default: "/Users/himanshukakkar/Downloads/user-dummy.png",
+        default: "https://freesvg.org/img/abstract-user-flat-4.png",
         // validate(value){
         //     if(!validator.isURL(value)) {
         //         throw new Error("Invalid image URL"+ value);
