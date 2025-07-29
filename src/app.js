@@ -1,3 +1,6 @@
+// To run tasks at sheduled time
+require("./utils/cronjob.js");
+
 require("dotenv").config(); 
 // console.log("JWT_SECRET_KEY is:", process.env.JWT_SECRET_KEY);
  // ✅ DEBUG LINE
@@ -14,6 +17,7 @@ const requestRouter = require('./routes/request.js');
 const profileRouter = require('./routes/profile.js');
 const userRouter = require("./routes/userRouter.js");
 const cors = require('cors');
+
 const port = process.env.PORT || 7777;
 
 // CORS (Cross-Origin Resource Sharing) is a security feature built into browsers that blocks web applications from making requests to a different origin than the one that served the web page.

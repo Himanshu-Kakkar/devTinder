@@ -275,7 +275,7 @@ so that frontend can receive it easily
         - pm2 flush npm // to clear all logs
         - pm2 stop npm // to stop the running server , stop the  process npm
         - pm2 delete npm // to delete the process npm
-        - pm2 start npm --name "<new_name>"-- start
+        - pm2 start npm --name "devTinder-backend" -- start
 
 
 Backend : http://13.60.212.146:7777/feed
@@ -325,3 +325,18 @@ location /api/ {
 - write code for sesClient
 - Write code for sending Email address
 - Make the email dynamic by passing more params to the run function
+
+
+# Sheduling cron jobs in NodeJS
+
+    - Install node-cron
+    - Learn about cron expression syntax - crontab.guru
+    - Sheduling a job
+    - date-fns
+    - find all the unique email id who have got connection request in previous day
+    - send email
+    - explore queue mechanism to send bulk emails
+    - Amazon SES Bulk emails
+    - Explore Create dynamic template
+    - make sendEmail function dynamic
+    - BEE-QUEUE and BULL npm packages to handle bulk emails
