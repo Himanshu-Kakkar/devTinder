@@ -53,6 +53,13 @@ const userSchema = mongoose.Schema({
         //     values: ["male","female", "other"],
         //     message: `{VALUE} is not a valid gender type`,
         // },
+        isPremium: {
+            type: Boolean,
+            default: false,
+        },
+        membershipType: {
+            type: String,
+        },
     },
     photoUrl: {
         type: String,

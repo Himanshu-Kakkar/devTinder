@@ -16,6 +16,8 @@ const authRouter = require('./routes/auth.js');
 const requestRouter = require('./routes/request.js');
 const profileRouter = require('./routes/profile.js');
 const userRouter = require("./routes/userRouter.js");
+const paymentRouter = require("./routes/payment.js");
+
 const cors = require('cors');
 
 const port = process.env.PORT || 7777;
@@ -58,6 +60,7 @@ app.use("/", authRouter);
 app.use("/",profileRouter);
 app.use("/",requestRouter);
 app.use("/", userRouter);
+app.use("/", paymentRouter);
 
 
 connectDB()
