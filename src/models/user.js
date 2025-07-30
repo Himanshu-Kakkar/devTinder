@@ -52,15 +52,18 @@ const userSchema = mongoose.Schema({
         // enum: {
         //     values: ["male","female", "other"],
         //     message: `{VALUE} is not a valid gender type`,
-        // },
-        isPremium: {
+        // },    
+    },
+
+    isPremium: {
             type: Boolean,
             default: false,
-        },
-        membershipType: {
-            type: String,
-        },
     },
+
+    membershipType: {
+        type: String,
+    },
+
     photoUrl: {
         type: String,
         default: "https://freesvg.org/img/abstract-user-flat-4.png",

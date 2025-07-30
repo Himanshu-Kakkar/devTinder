@@ -50,7 +50,9 @@ paymentRouter.post("/payment/create", userAuth, async (req, res) => {
 
 paymentRouter.post("/payment/webhook", async (req, res) => {
   try {
-    const webhookSignature = req.get["X-Razorpay-Signature"];
+    console.log("webhook called");
+    const webhookSignature = req.get("X-Razorpay-Signature");
+    console.log("webhook signature called", webhookSignature);
 
     const isWebhookValid = validateWebhookSignature(
       JSON.stringify(req.body),
@@ -59,8 +61,10 @@ paymentRouter.post("/payment/webhook", async (req, res) => {
     );
 
     if (!isWebhookValid) {
-      return res.status(400).json({ msg: "Webhook signature is invalid" });
+        console.log("Invalid webhook signature");
+        return res.status(400).json({ msg: "Webhook signature is invalid" });
     }
+    console.log("Valid webhook signature");
 
     // Udpate my payment Status in DB
     const paymentDetails = req.body.payload.payment.entity;
@@ -68,6 +72,7 @@ paymentRouter.post("/payment/webhook", async (req, res) => {
     const payment = await Payment.findOne({ orderId: paymentDetails.order_id });
     payment.status = paymentDetails.status;
     await payment.save();
+    console.log("payment saved");
 
     const user = await User.findOne({ _id: payment.userId });
     user.isPremium = true;
@@ -88,5 +93,15 @@ paymentRouter.post("/payment/webhook", async (req, res) => {
     return res.status(500).json({ msg: err.message });
   }
 });
+
+paymentRouter.get("/premium/verify", userAuth, async (req, res) => {
+    const user = req.user.toJSON();
+    console.log(user);
+
+    if(user.isPremium){
+        return res.json({ ...user });
+    }
+    return res.json({ ...user });
+})
 
 module.exports = paymentRouter;
