@@ -17,8 +17,16 @@ const requestRouter = require('./routes/request.js');
 const profileRouter = require('./routes/profile.js');
 const userRouter = require("./routes/userRouter.js");
 const paymentRouter = require("./routes/payment.js");
+const {chatRouter, chatDeleteRouter, chatTrimRouter} = require("./routes/chat.js");
+const { userInfo } = require("./routes/userInfo.js");
+
 
 const cors = require('cors');
+
+const http = require("http");
+const initializeSocket = require("./utils/socket.js");
+
+
 
 const port = process.env.PORT || 7777;
 
@@ -39,10 +47,24 @@ const port = process.env.PORT || 7777;
 
 // backend should know where your frontend is hosted
 // Allow specific origin
+const allowedOrigins = ["http://localhost:5173"];
+
 app.use(cors({
-    origin: "http://localhost:5173", // whitelisting this domain name
-    credentials: true
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
+        } else {
+            return callback(new Error("Not allowed by CORS"));
+        }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+    optionsSuccessStatus: 200
 }));
+
 
 // correct
 app.use(cookieParser());
@@ -61,14 +83,25 @@ app.use("/",profileRouter);
 app.use("/",requestRouter);
 app.use("/", userRouter);
 app.use("/", paymentRouter);
+app.use("/", chatRouter);
+app.use("/", chatDeleteRouter);
+// app.use("/", chatTrimRouter);
+app.use("/", userInfo);
+
+// created a server using app
+const server = http.createServer(app);
+initializeSocket(server);
 
 
 connectDB()
 .then(()=>{
     console.log("database connect successfully");
-    app.listen(port, ()=> { 
+    server.listen(port, ()=> { 
         console.log("server is started");
     })
+    // app.listen(port, ()=> { 
+    //     console.log("server is started");
+    // })
 })
 .catch(()=> {
     console.error("database cannot be connected ");

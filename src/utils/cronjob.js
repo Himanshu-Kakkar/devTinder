@@ -49,14 +49,14 @@ cron.schedule("0 15 * * *", async ()=> {
 
         const listOfEmails = [...new Set(pendingRequests.map(req=> req.toUserId.emailId))];
 
-        console.log(listOfEmails);
+        // console.log(listOfEmails);
 
         for(const email of listOfEmails){
             // send emails
             try {
                 const res = await sendEmail.run("new frined request pending for " + email,
                     "There can be more requests, please login to devTinder to make friends");
-                console.log(res);
+                // console.log(res);
 
             } catch (err) {
                 console.log(err);
