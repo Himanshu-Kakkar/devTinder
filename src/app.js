@@ -47,7 +47,7 @@ const port = process.env.PORT || 7777;
 
 // backend should know where your frontend is hosted
 // Allow specific origin
-const allowedOrigins = ["http://localhost:5173"];
+const allowedOrigins = ["http://localhost:5173", "http://13.60.212.146"];
 
 app.use(cors({
     origin: function (origin, callback) {
