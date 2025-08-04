@@ -2,7 +2,6 @@ const { disconnect } = require("process");
 const socket = require("socket.io");
 const crypto = require("crypto");
 const { Chat } = require("../models/chat");
-const { timeStamp } = require("console");
 const ConnectionRequest = require("../models/connectionReq");
 
 
@@ -10,6 +9,11 @@ const initializeSocket = (server) => {
 
     // To handle cors issues
     const io = socket(server, {
+        // path: "/api/socket.io", // 👈 this is required for frontend to find it
+        // cors: {
+        //     origin: "http://localhost:5173", // or your production domain
+        //     methods: ["GET", "POST"]
+        // }
         cors: {
             origin: "http://localhost:5173"
         },
