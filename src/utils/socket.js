@@ -9,7 +9,7 @@ const initializeSocket = (server) => {
 
     // To handle cors issues
     const io = socket(server, {
-        // path: "/api/socket.io", // 👈 this is required for frontend to find it
+        path: "/api/socket.io", // 👈 this is required for frontend to find it
         // cors: {
         //     origin: "http://localhost:5173", // or your production domain
         //     methods: ["GET", "POST"]
