@@ -1,23 +1,19 @@
 const { disconnect } = require("process");
 const socket = require("socket.io");
-const crypto = require("crypto");
 const { Chat } = require("../models/chat");
 const ConnectionRequest = require("../models/connectionReq");
 
 
 const initializeSocket = (server) => {
 
-    // To handle cors issues
-    const io = socket(server, {
-        path: "/api/socket.io", // 👈 this is required for frontend to find it
-        // cors: {
-        //     origin: "http://localhost:5173", // or your production domain
-        //     methods: ["GET", "POST"]
-        // }
-        cors: {
-            origin: "http://localhost:5173"
-        },
-    })
+ const io = socket(server, {
+    path: "/socket.io",
+    cors: {
+      origin: "http://localhost:5173", // ✅ Dev frontend
+      methods: ["GET", "POST"],        // ✅ Recommended to explicitly allow methods
+      credentials: true                // ✅ Optional, if you're using cookies or auth headers
+    }
+  });
 
     // how you accept connections
     // you start listening to connections
@@ -103,6 +99,7 @@ const initializeSocket = (server) => {
 
 
 })
+    return io;
 };
 
 module.exports = initializeSocket;
