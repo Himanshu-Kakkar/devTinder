@@ -340,3 +340,11 @@ location /api/ {
     - Explore Create dynamic template
     - make sendEmail function dynamic
     - BEE-QUEUE and BULL npm packages to handle bulk emails
+
+
+
+# TODO
+- add image using cloudnary 
+    - SAAS in react App
+- add gemini API restricted to your project
+    - ./src/gemini.js
