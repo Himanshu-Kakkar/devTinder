@@ -48,7 +48,11 @@ const port = process.env.PORT || 7777;
 
 // backend should know where your frontend is hosted
 // Allow specific origin
-const allowedOrigins = ["http://localhost:5173", "http://13.60.212.146"];
+const allowedOrigins = [
+    "http://localhost:5173",
+    "https://devconnect-web-3fxq.onrender.com",
+    "https://devconnect-no9b.onrender.com",
+];
 
 app.use(cors({
     origin: function (origin, callback) {
@@ -57,6 +61,7 @@ app.use(cors({
         if (allowedOrigins.includes(origin)) {
             return callback(null, true);
         } else {
+            console.log("❌ Blocked by CORS:", origin);
             return callback(new Error("Not allowed by CORS"));
         }
     },
@@ -65,6 +70,9 @@ app.use(cors({
     allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
     optionsSuccessStatus: 200
 }));
+
+// ✅ Explicitly handle preflight requests (important for Render)
+// app.options("*", cors());
 
 
 // correct
