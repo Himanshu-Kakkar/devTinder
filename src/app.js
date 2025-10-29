@@ -30,6 +30,8 @@ const initializeSocket = require("./utils/socket.js");
 
 
 const port = process.env.PORT || 7777;
+// Trust Render/Proxy so secure cookies and protocol detection work
+app.set("trust proxy", 1);
 
 // CORS (Cross-Origin Resource Sharing) is a security feature built into browsers that blocks web applications from making requests to a different origin than the one that served the web page.
 // When you use the cors middleware in Express, it tells the browser:
