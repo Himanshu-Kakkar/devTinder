@@ -9,9 +9,9 @@ const initializeSocket = (server) => {
  const io = socket(server, {
     path: "/socket.io",
     cors: {
-      origin: "http://localhost:5173", // ✅ Dev frontend
-      methods: ["GET", "POST"],        // ✅ Recommended to explicitly allow methods
-      credentials: true                // ✅ Optional, if you're using cookies or auth headers
+      origin: "http://localhost:5173", //  Dev frontend
+      methods: ["GET", "POST"],        //  Recommended to explicitly allow methods
+      credentials: true                //  Optional, if you're using cookies or auth headers
     }
   });
 

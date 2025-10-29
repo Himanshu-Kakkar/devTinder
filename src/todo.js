@@ -18,7 +18,7 @@ const swipeScreen = readFile("../frontend/SwipeScreen.js");
 
 // System prompt context
 const systemInstructions = `
-You are an assistant for a Tinder clone app. Only answer questions based on the following project files. Do not answer anything unrelated.
+You are an assistant for a devConnect app. Only answer questions based on the following project files. Do not answer anything unrelated.
 
 # README.md
 ${readme}

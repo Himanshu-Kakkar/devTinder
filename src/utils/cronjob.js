@@ -55,7 +55,7 @@ cron.schedule("0 15 * * *", async ()=> {
             // send emails
             try {
                 const res = await sendEmail.run("new frined request pending for " + email,
-                    "There can be more requests, please login to devTinder to make friends");
+                    "There can be more requests, please login to devConnect to make friends");
                 // console.log(res);
 
             } catch (err) {

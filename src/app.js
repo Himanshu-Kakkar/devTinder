@@ -19,6 +19,7 @@ const userRouter = require("./routes/userRouter.js");
 const paymentRouter = require("./routes/payment.js");
 const {chatRouter, chatDeleteRouter, chatTrimRouter} = require("./routes/chat.js");
 const { userInfo } = require("./routes/userInfo.js");
+const geminiRouter = require("./routes/gemini.js");
 
 
 const cors = require('cors');
@@ -87,6 +88,7 @@ app.use("/", chatRouter);
 app.use("/", chatDeleteRouter);
 // app.use("/", chatTrimRouter);
 app.use("/", userInfo);
+app.use("/", geminiRouter);
 
 // created a server using app
 const server = http.createServer(app);
