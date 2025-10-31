@@ -39,9 +39,6 @@ authRouter.post("/signup", async (req,res)=> {
 
         res.cookie("token", token, {
             expires: new Date(Date.now() + 8 * 3600000),
-            httpOnly: true,
-            secure: true, // required for SameSite=None on HTTPS
-            sameSite: "None",
         })
         res.json({message: "User added Successfully", data: savedUser});
 
@@ -83,10 +80,7 @@ authRouter.post("/login", async (req, res)=> {
             // Add a token to cookie and send the response back to user
             // EXPIRING A COOKIE AS WELL AS TOKEN
             res.cookie("token", token, {
-                expires: new Date(Date.now() + 8 * 3600000),
-                httpOnly: true,
-                secure: true, // required for SameSite=None on HTTPS
-                sameSite: "None",
+                expires: new Date(Date.now() + 8 * 3600000), // it will add expire details in cookie in postman
             });
 
             // res.cookie("token", token, {
@@ -112,10 +106,7 @@ authRouter.post("/login", async (req, res)=> {
 
 authRouter.post("/logout", async (req,res) => {
     res.cookie("token", null, {
-        expires: new Date(Date.now()),
-        httpOnly: true,
-        secure: true,
-        sameSite: "None",
+        expires: new Date(Date.now())
     });
     res.send("Logout Succesfully");
     //res.cookie().send(); same thing

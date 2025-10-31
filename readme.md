@@ -3,6 +3,7 @@
 
 > This is the **backend folder only**. The frontend repo can be found [here](https://github.com/Himanshu-Kakkar/devTinder-web).
 
+Live URL:  [devConnect.com](https://devconnect-web-3fxq.onrender.com/)
 
 This repo contains the **backend code** for the **devConnect** application — a platform designed to connect developers, facilitate communication, and enable smooth collaboration.  
 The backend handles everything from **user authentication** and **profile management** to **real-time chat** and **payment integration**.
